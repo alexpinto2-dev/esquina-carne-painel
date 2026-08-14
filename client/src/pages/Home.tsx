@@ -3,17 +3,17 @@
  * A tela pública exibe somente produtos, valores e contato. A manutenção
  * permanece contextual e acessível apenas pelo ícone no cabeçalho.
  */
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { trpc } from "@/lib/trpc";
+import { fromPriceCents, toPriceCents } from "@shared/price-utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { ChevronLeft, ChevronRight, MessageCircle, Plus, QrCode, Search, Settings2, Trash2, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus, Search, Settings2, Trash2 } from "lucide-react";
 
 type Product = { id: number; name: string; price: number; unit: string };
 const whatsapp = "5579999592625";
-const whatsappUrl = `https://wa.me/${whatsapp}?text=Olá%2C%20gostaria%20de%20fazer%20um%20pedido.`;
 
 const initialProducts: Product[] = [
   { id: 1, name: "Bife Temperado", price: 52.9, unit: "kg" }, { id: 2, name: "Almôndegas", price: 35.9, unit: "kg" }, { id: 3, name: "Mocotó", price: 12.99, unit: "kg" }, { id: 4, name: "Carne Moída", price: 21.99, unit: "kg" }, { id: 5, name: "Galinha de capoeira", price: 38.99, unit: "kg" }, { id: 6, name: "Coração de Frango Temperado", price: 56.99, unit: "kg" }, { id: 7, name: "Coração Frango", price: 54.99, unit: "kg" }, { id: 8, name: "Peito Frango c/ osso", price: 18, unit: "kg" }, { id: 9, name: "Filé de Peito de Frango", price: 24.99, unit: "kg" }, { id: 10, name: "Filé Frango Temperado", price: 29.9, unit: "kg" }, { id: 11, name: "Chambaril", price: 26.9, unit: "kg" },
@@ -26,7 +26,19 @@ const initialProducts: Product[] = [
 const money = (value: number) => value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 
 export default function Home() {
-  const [products, setProducts] = useState<Product[]>(() => { try { return JSON.parse(localStorage.getItem("esquina-products-v2") || "null") || initialProducts; } catch { return initialProducts; } });
+  const pricesQuery = trpc.prices.list.useQuery(undefined, { refetchInterval: 5000, refetchOnWindowFocus: true });
+  const replacePrices = trpc.prices.replaceAll.useMutation();
+  const [products, setProducts] = useState<Product[]>(initialProducts);
+  const seededRef = useRef(false);
+
+  useEffect(() => {
+    if (pricesQuery.data && pricesQuery.data.length > 0) {
+      setProducts(pricesQuery.data.map((item) => ({ id: item.id, name: item.name, price: fromPriceCents(item.priceCents), unit: item.unit })));
+    } else if (pricesQuery.data && pricesQuery.data.length === 0 && !seededRef.current) {
+      seededRef.current = true;
+      replacePrices.mutate({ items: initialProducts.map((item, position) => ({ name: item.name, priceCents: toPriceCents(item.price), unit: item.unit, position })) });
+    }
+  }, [pricesQuery.data]);
   const [search, setSearch] = useState("");
   const [maintenanceOpen, setMaintenanceOpen] = useState(false);
   const [page, setPage] = useState(0);
@@ -35,17 +47,22 @@ export default function Home() {
   const pageCount = Math.max(1, Math.ceil(filtered.length / pageSize));
   const visible = filtered.slice((page % pageCount) * pageSize, (page % pageCount) * pageSize + pageSize);
 
-  useEffect(() => { localStorage.setItem("esquina-products-v2", JSON.stringify(products)); }, [products]);
   useEffect(() => { const timer = window.setInterval(() => setPage((current) => (current + 1) % pageCount), 12000); return () => window.clearInterval(timer); }, [pageCount]);
   useEffect(() => { if (page >= pageCount) setPage(0); }, [page, pageCount]);
 
   const updateProduct = (id: number, patch: Partial<Product>) => setProducts((list) => list.map((item) => item.id === id ? { ...item, ...patch } : item));
   const addProduct = () => setProducts((list) => [...list, { id: Date.now(), name: "Novo produto", price: 0, unit: "kg" }]);
   const removeProduct = (id: number) => setProducts((list) => list.filter((item) => item.id !== id));
+  const savePrices = async () => {
+    await replacePrices.mutateAsync({ items: products.map((item, position) => ({ name: item.name, priceCents: toPriceCents(item.price), unit: item.unit, position })) });
+    await pricesQuery.refetch();
+    setMaintenanceOpen(false);
+    toast.success("Preços sincronizados em todos os dispositivos");
+  };
 
-  return <div className="min-h-screen bg-[#0c0d0f] text-[#f4f4f1]">
-    <header className="site-header"><div className="header-inner"><div className="logo-lockup"><img src="/manus-storage/logoesquina_6c4420b9.jpg" alt="Esquina da Carne" /><div><span>ESQUINA DA CARNE</span><small>Aracaju · Sergipe</small></div></div><div className="header-actions"><a className="whatsapp-button" href={whatsappUrl} target="_blank" rel="noreferrer"><MessageCircle className="size-4" /><span>Pedidos no WhatsApp</span></a><div className="qr-wrap"><img src={`https://api.qrserver.com/v1/create-qr-code/?size=160x160&margin=8&data=${encodeURIComponent(`https://wa.me/${whatsapp}`)}`} alt="QR Code para pedidos no WhatsApp" /><span>aponte a câmera</span></div><button className="maintenance-icon" title="Manutenção dos preços" aria-label="Manutenção dos preços" onClick={() => setMaintenanceOpen(true)}><Settings2 className="size-5" /></button></div></div></header>
+  return <div className="min-h-screen bg-[#101b2d] text-[#f9f0dd]">
+    <header className="site-header"><div className="header-inner"><div className="logo-lockup"><img src="/manus-storage/logoesquina_6c4420b9.jpg" alt="Esquina da Carne" /><div><span>ESQUINA DA CARNE</span><small>Aracaju · Sergipe</small></div></div><div className="header-actions"><div className="qr-wrap"><img src={`https://api.qrserver.com/v1/create-qr-code/?size=320x320&margin=8&data=${encodeURIComponent(`https://wa.me/${whatsapp}`)}`} alt="QR Code para pedidos no WhatsApp" /><span>Aponte a câmera<br />e peça pelo WhatsApp</span></div><button className="maintenance-icon" title="Manutenção dos preços" aria-label="Manutenção dos preços" onClick={() => setMaintenanceOpen(true)}><Settings2 className="size-5" /></button></div></div></header>
     <main className="price-board"><div className="board-heading"><div><p className="eyebrow">Tabela de preços</p><h1>Preços do balcão</h1></div><span className="updated-note">Atualizado agora</span></div><section className="price-grid" aria-live="polite">{visible.map((product) => <article className="simple-price-row" key={product.id}><h2>{product.name}</h2><div className="row-rule" /><strong>{money(product.price)}</strong><span>/{product.unit}</span></article>)}</section><footer className="board-footer"><span>Esquina da Carne · Aracaju/SE</span><div className="pager"><button onClick={() => setPage((p) => Math.max(0, p - 1))} disabled={page === 0}><ChevronLeft /></button><b>{(page % pageCount) + 1} / {pageCount}</b><button onClick={() => setPage((p) => Math.min(pageCount - 1, p + 1))} disabled={page >= pageCount - 1}><ChevronRight /></button></div></footer></main>
-    <Sheet open={maintenanceOpen} onOpenChange={setMaintenanceOpen}><SheetContent className="w-full overflow-y-auto border-l border-[#b8b8b0]/20 bg-[#f0efe9] text-[#17191c] sm:max-w-xl"><SheetHeader className="border-b border-[#17191c]/10 pb-5"><SheetTitle className="display-title text-3xl">Manutenção dos preços</SheetTitle><SheetDescription className="text-[#17191c]/65">Edite os valores exibidos no painel. As alterações ficam salvas neste dispositivo.</SheetDescription></SheetHeader><div className="space-y-5 py-5"><div className="flex gap-2"><Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Buscar produto" className="border-[#17191c]/15 bg-white" /><Button onClick={addProduct} variant="outline" className="border-[#17191c]/20 bg-transparent font-bold"><Plus className="mr-2 size-4" /> Novo</Button></div><div className="space-y-3">{products.filter((p) => p.name.toLowerCase().includes(search.toLowerCase())).map((product) => <div key={product.id} className="edit-row"><div className="grid flex-1 gap-2 sm:grid-cols-[1.6fr_.7fr_.55fr]"><Input value={product.name} onChange={(e) => updateProduct(product.id, { name: e.target.value })} className="border-[#17191c]/15 bg-white font-semibold" /><Input type="number" step="0.01" value={product.price} onChange={(e) => updateProduct(product.id, { price: Number(e.target.value) })} className="border-[#17191c]/15 bg-white" /><select value={product.unit} onChange={(e) => updateProduct(product.id, { unit: e.target.value })} className="h-10 rounded-md border border-[#17191c]/15 bg-white px-2 text-sm"><option value="kg">kg</option><option value="und">und</option></select></div><button onClick={() => removeProduct(product.id)} className="delete-button" aria-label={`Excluir ${product.name}`}><Trash2 className="size-4" /></button></div>)}</div></div><Button onClick={() => { setMaintenanceOpen(false); toast.success("Preços atualizados"); }} className="mt-auto w-full bg-[#b33f36] font-bold text-white hover:bg-[#96342d]">Salvar alterações</Button></SheetContent></Sheet>
+    <Sheet open={maintenanceOpen} onOpenChange={setMaintenanceOpen}><SheetContent className="w-full overflow-y-auto border-l border-[#b8b8b0]/20 bg-[#f0efe9] text-[#17191c] sm:max-w-xl"><SheetHeader className="border-b border-[#17191c]/10 pb-5"><SheetTitle className="display-title text-3xl">Manutenção dos preços</SheetTitle><SheetDescription className="text-[#17191c]/65">Edite os valores exibidos no painel. As alterações ficam salvas neste dispositivo.</SheetDescription></SheetHeader><div className="space-y-5 py-5"><div className="flex gap-2"><Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Buscar produto" className="border-[#17191c]/15 bg-white" /><Button onClick={addProduct} variant="outline" className="border-[#17191c]/20 bg-transparent font-bold"><Plus className="mr-2 size-4" /> Novo</Button></div><div className="space-y-3">{products.filter((p) => p.name.toLowerCase().includes(search.toLowerCase())).map((product) => <div key={product.id} className="edit-row"><div className="grid flex-1 gap-2 sm:grid-cols-[1.6fr_.7fr_.55fr]"><Input value={product.name} onChange={(e) => updateProduct(product.id, { name: e.target.value })} className="border-[#17191c]/15 bg-white font-semibold" /><Input type="number" step="0.01" value={product.price} onChange={(e) => updateProduct(product.id, { price: Number(e.target.value) })} className="border-[#17191c]/15 bg-white" /><select value={product.unit} onChange={(e) => updateProduct(product.id, { unit: e.target.value })} className="h-10 rounded-md border border-[#17191c]/15 bg-white px-2 text-sm"><option value="kg">kg</option><option value="und">und</option></select></div><button onClick={() => removeProduct(product.id)} className="delete-button" aria-label={`Excluir ${product.name}`}><Trash2 className="size-4" /></button></div>)}</div></div><Button onClick={savePrices} disabled={replacePrices.isPending} className="mt-auto w-full bg-[#d94a3d] font-bold text-white hover:bg-[#b83a30]">{replacePrices.isPending ? "Sincronizando..." : "Salvar e sincronizar"}</Button></SheetContent></Sheet>
   </div>;
 }

@@ -8,35 +8,35 @@
 @import "tw-animate-css";
 @custom-variant dark (&:is(.dark *));
 @theme inline { --font-sans: 'DM Sans', sans-serif; --font-display: 'Barlow Condensed', sans-serif; --color-background: var(--background); --color-foreground: var(--foreground); --color-card: var(--card); --color-card-foreground: var(--card-foreground); --color-popover: var(--popover); --color-popover-foreground: var(--popover-foreground); --color-primary: var(--primary); --color-primary-foreground: var(--primary-foreground); --color-border: var(--border); --color-input: var(--input); --color-ring: var(--ring); --radius-md: .35rem; --radius-lg: .5rem; }
-:root { --background: #0c0d0f; --foreground: #f4f4f1; --card: #17191c; --card-foreground: #f4f4f1; --popover: #f0efe9; --popover-foreground: #17191c; --primary: #b33f36; --primary-foreground: #fff; --border: rgba(244,244,241,.22); --input: rgba(23,25,28,.15); --ring: #b33f36; }
+:root { --background: #101b2d; --foreground: #f9f0dd; --card: #213b61; --card-foreground: #f9f0dd; --popover: #f8f0e1; --popover-foreground: #162b49; --primary: #d94a3d; --primary-foreground: #fff8ec; --border: rgba(249,240,221,.22); --input: rgba(22,43,73,.15); --ring: #d94a3d; }
 @layer base { * { @apply border-border outline-ring/50; } body { @apply bg-background text-foreground; margin: 0; font-family: 'DM Sans', sans-serif; } button:not(:disabled), a[href], select:not(:disabled) { cursor: pointer; } }
 .display-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; letter-spacing: -.03em; }
 .eyebrow { color: #b9b9b0; font-size: .65rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
-.site-header { position: relative; overflow: hidden; border-bottom: 1px solid rgba(244,244,241,.18); background: #151719; }
-.site-header::before { content: ''; position: absolute; inset: 0; opacity: .22; background: radial-gradient(circle at 12% 30%, #4e4f4b 0 1px, transparent 1px) 0 0/10px 10px, linear-gradient(100deg, transparent, rgba(255,255,255,.1), transparent); }
-.header-inner { position: relative; display: flex; max-width: 1600px; margin: 0 auto; align-items: center; justify-content: space-between; gap: 1.25rem; padding: .65rem clamp(1rem, 3vw, 3.5rem); }
+.site-header { position: relative; overflow: hidden; border-bottom: 1px solid rgba(249,240,221,.2); background: #162b49; }
+.site-header::before { content: ''; position: absolute; inset: 0; opacity: .18; background: radial-gradient(circle at 12% 30%, #e3b77b 0 1px, transparent 1px) 0 0/12px 12px, linear-gradient(100deg, transparent, rgba(255,255,255,.09), transparent); }
+.header-inner { position: relative; display: flex; max-width: 1600px; margin: 0 auto; align-items: center; justify-content: space-between; gap: 1.25rem; padding: 1.15rem clamp(1rem, 3vw, 3.5rem); }
 .logo-lockup { display: flex; align-items: center; gap: .75rem; min-width: 0; }
-.logo-lockup img { width: 62px; height: 62px; border-radius: 50%; object-fit: cover; background: #efefe8; }
-.logo-lockup span { display: block; color: #f4f4f1; font-family: 'Barlow Condensed', sans-serif; font-size: clamp(1.7rem, 3vw, 2.7rem); font-weight: 800; line-height: .86; letter-spacing: -.03em; }
-.logo-lockup small { display: block; margin-top: .3rem; color: #aaa9a1; font-size: .62rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+.logo-lockup img { width: 84px; height: 84px; border-radius: 50%; object-fit: cover; background: #efefe8; }
+.logo-lockup span { display: block; color: #fff8ec; font-family: 'Barlow Condensed', sans-serif; font-size: clamp(1.7rem, 3vw, 2.7rem); font-weight: 800; line-height: .86; letter-spacing: -.03em; }
+.logo-lockup small { display: block; margin-top: .35rem; color: #d9e0e7; font-size: .62rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
 .header-actions { display: flex; align-items: center; gap: .75rem; }
 .whatsapp-button { display: inline-flex; align-items: center; gap: .45rem; border-radius: .25rem; background: #218c5a; padding: .65rem .85rem; color: #fff; font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-decoration: none; text-transform: uppercase; transition: background .18s ease, transform .16s ease; }
 .whatsapp-button:hover { background: #2ca86c; }
 .whatsapp-button:active, .maintenance-icon:active, .pager button:active { transform: scale(.96); }
-.qr-wrap { display: flex; align-items: center; gap: .45rem; color: #a9aaa4; font-size: .55rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
-.qr-wrap img { width: 42px; height: 42px; border: 3px solid #fff; background: #fff; }
-.maintenance-icon { display: grid; width: 40px; height: 40px; place-items: center; border: 1px solid rgba(244,244,241,.3); border-radius: .25rem; background: transparent; color: #f4f4f1; transition: background .18s ease, transform .16s ease; }
+.qr-wrap { display: flex; align-items: center; gap: .7rem; color: #f9f0dd; font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.qr-wrap img { width: 76px; height: 76px; border: 3px solid #fff; background: #fff; }
+.maintenance-icon { display: grid; width: 46px; height: 46px; place-items: center; border: 1px solid rgba(244,244,241,.3); border-radius: .25rem; background: transparent; color: #f4f4f1; transition: background .18s ease, transform .16s ease; }
 .maintenance-icon:hover { background: rgba(244,244,241,.12); }
-.price-board { max-width: 1600px; margin: 0 auto; padding: 1.25rem clamp(1rem, 3vw, 3.5rem) 1.5rem; }
+.price-board { max-width: 1600px; margin: 0 auto; padding: 1.65rem clamp(1rem, 3vw, 3.5rem) 1.5rem; }
 .board-heading { display: flex; align-items: end; justify-content: space-between; gap: 1rem; border-bottom: 1px solid rgba(244,244,241,.18); padding-bottom: .8rem; }
-.board-heading h1 { margin: .15rem 0 0; color: #f4f4f1; font-family: 'Barlow Condensed', sans-serif; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 700; line-height: .9; }
-.updated-note { color: #a9aaa4; font-size: .62rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.board-heading h1 { margin: .15rem 0 0; color: #fff8ec; font-family: 'Barlow Condensed', sans-serif; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 700; line-height: .9; }
+.updated-note { color: #d9e0e7; font-size: .62rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
 .price-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 2.5rem; margin-top: 1rem; }
 .simple-price-row { display: grid; grid-template-columns: minmax(0, 1fr) 1fr auto auto; align-items: center; gap: .7rem; min-height: 49px; border-bottom: 1px solid rgba(244,244,241,.22); }
-.simple-price-row h2 { margin: 0; color: #f3f3f0; font-size: clamp(.95rem, 1.55vw, 1.35rem); font-weight: 600; line-height: 1.05; }
+.simple-price-row h2 { margin: 0; color: #fff8ec; font-size: clamp(.95rem, 1.55vw, 1.35rem); font-weight: 600; line-height: 1.05; }
 .row-rule { border-top: 1px dotted rgba(244,244,241,.25); }
-.simple-price-row strong { color: #fff; font-family: 'Barlow Condensed', sans-serif; font-size: clamp(1.35rem, 2.1vw, 1.95rem); font-weight: 700; line-height: 1; text-align: right; white-space: nowrap; }
-.simple-price-row > span { width: 2.6rem; color: #d0d0c8; font-size: clamp(.85rem, 1.2vw, 1.1rem); font-weight: 600; }
+.simple-price-row strong { color: #fff8ec; font-family: 'Barlow Condensed', sans-serif; font-size: clamp(1.35rem, 2.1vw, 1.95rem); font-weight: 700; line-height: 1; text-align: right; white-space: nowrap; }
+.simple-price-row > span { width: 2.6rem; color: #e3b77b; font-size: clamp(.85rem, 1.2vw, 1.1rem); font-weight: 600; }
 .board-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 1.05rem; color: #8f908a; font-size: .62rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
 .pager { display: flex; align-items: center; gap: .55rem; }
 .pager button { display: grid; width: 26px; height: 26px; place-items: center; border: 1px solid rgba(244,244,241,.24); border-radius: .25rem; background: transparent; color: #f4f4f1; transition: background .18s ease, transform .16s ease; }

@@ -10,3 +10,14 @@
 - [x] Adicionar botão de pedidos via WhatsApp no cabeçalho.
 - [x] Validar em resolução de TV e mobile.
 - [x] Salvar novo checkpoint ao final.
+
+# Nova revisão
+
+- [x] Restaurar o visual azul-marinho e creme da versão anterior.
+- [x] Aumentar a altura do topo e o tamanho do QR Code.
+- [x] Exibir somente “Aponte a câmera e peça pelo WhatsApp” na área do QR Code.
+- [x] Remover o link visível do WhatsApp na tela da TV.
+- [x] Adicionar backend e banco para sincronizar preços entre dispositivos.
+- [x] Atualizar automaticamente a tela pública quando houver alteração nos preços.
+- [x] Validar edição, inclusão e sincronização.
+- [x] Salvar novo checkpoint.
