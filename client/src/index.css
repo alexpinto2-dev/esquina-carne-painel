@@ -1,13 +1,17 @@
+/*
+ * Direção visual: Placa de Açougue Contemporânea.
+ * Azul-marinho de confiança, vermelho balcão para ação, creme de papel
+ * para leitura, blocos assimétricos e textura sutil sem ruído visual.
+ */
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --font-sans: 'DM Sans', sans-serif;
+  --font-display: 'Barlow Condensed', sans-serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -16,162 +20,54 @@
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
+  --radius-md: .45rem;
+  --radius-lg: .55rem;
 }
 
-:root {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-600);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
-  --radius: 0.65rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.235 0.015 65);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.235 0.015 65);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.235 0.015 65);
-  --secondary: oklch(0.98 0.001 286.375);
-  --secondary-foreground: oklch(0.4 0.015 65);
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.141 0.005 285.823);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.623 0.214 259.815);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.235 0.015 65);
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-  --sidebar-accent-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.623 0.214 259.815);
-}
-
-.dark {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-500);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --background: oklch(0.141 0.005 285.823);
-  --foreground: oklch(0.85 0.005 65);
-  --card: oklch(0.21 0.006 285.885);
-  --card-foreground: oklch(0.85 0.005 65);
-  --popover: oklch(0.21 0.006 285.885);
-  --popover-foreground: oklch(0.85 0.005 65);
-  --secondary: oklch(0.24 0.006 286.033);
-  --secondary-foreground: oklch(0.7 0.005 65);
-  --muted: oklch(0.274 0.006 286.033);
-  --muted-foreground: oklch(0.705 0.015 286.067);
-  --accent: oklch(0.274 0.006 286.033);
-  --accent-foreground:  oklch(0.92 0.005 65);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.488 0.243 264.376);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
-  --sidebar: oklch(0.21 0.006 285.885);
-  --sidebar-foreground: oklch(0.85 0.005 65);
-  --sidebar-accent: oklch(0.274 0.006 286.033);
-  --sidebar-accent-foreground:  oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.488 0.243 264.376);
-}
+:root { --background: #101b2d; --foreground: #f9f0dd; --card: #172a44; --card-foreground: #f9f0dd; --popover: #f8f0e1; --popover-foreground: #162b49; --primary: #d94a3d; --primary-foreground: #fff8ec; --border: rgba(249,240,221,.14); --input: rgba(22,43,73,.15); --ring: #d94a3d; --radius: .5rem; }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-  button:not(:disabled),
-  [role="button"]:not([aria-disabled="true"]),
-  [type="button"]:not(:disabled),
-  [type="submit"]:not(:disabled),
-  [type="reset"]:not(:disabled),
-  a[href],
-  select:not(:disabled),
-  input[type="checkbox"]:not(:disabled),
-  input[type="radio"]:not(:disabled) {
-    @apply cursor-pointer;
-  }
+  * { @apply border-border outline-ring/50; }
+  body { @apply bg-background text-foreground; margin: 0; font-family: 'DM Sans', sans-serif; }
+  button:not(:disabled), [role="button"]:not([aria-disabled="true"]), a[href], select:not(:disabled) { cursor: pointer; }
 }
 
-@layer components {
-  /**
-   * Custom container utility that centers content and adds responsive padding.
-   *
-   * This overrides Tailwind's default container behavior to:
-   * - Auto-center content (mx-auto)
-   * - Add responsive horizontal padding
-   * - Set max-width for large screens
-   *
-   * Usage: <div className="container">...</div>
-   *
-   * For custom widths, use max-w-* utilities directly:
-   * <div className="max-w-6xl mx-auto px-4">...</div>
-   */
-  .container {
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 1rem; /* 16px - mobile padding */
-    padding-right: 1rem;
-  }
-
-  .flex {
-    min-height: 0;
-    min-width: 0;
-  }
-
-  @media (min-width: 640px) {
-    .container {
-      padding-left: 1.5rem; /* 24px - tablet padding */
-      padding-right: 1.5rem;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .container {
-      padding-left: 2rem; /* 32px - desktop padding */
-      padding-right: 2rem;
-      max-width: 1280px; /* Standard content width */
-    }
-  }
-}
+.display-title, .display-price { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; letter-spacing: -.035em; }
+.eyebrow { font-size: .68rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
+.brand-mark { display: grid; width: 58px; height: 58px; place-items: center; overflow: hidden; border: 1px solid rgba(227,183,123,.35); border-radius: 50%; background: #f8f0e1; box-shadow: 0 8px 24px rgba(0,0,0,.22); }
+.brand-mark img { width: 100%; height: 100%; object-fit: cover; }
+.live-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #8ed3a2; box-shadow: 0 0 0 3px rgba(142,211,162,.13); }
+.offer-tag { display: inline-flex; position: relative; padding: .4rem .7rem; background: #d94a3d; color: #fff8ec; font-size: .7rem; font-weight: 800; letter-spacing: .18em; transform: skew(-9deg); }
+.offer-tag::after { content: ''; position: absolute; right: -8px; top: 0; bottom: 0; width: 8px; background: #e3b77b; }
+.hero-strip { position: relative; box-shadow: 0 18px 42px rgba(0,0,0,.16); border-bottom: 3px dotted rgba(227,183,123,.5); }
+.hero-strip::after { content: ''; position: absolute; right: -120px; bottom: -190px; width: 360px; height: 360px; border: 1px solid rgba(227,183,123,.3); border-radius: 50%; box-shadow: 0 0 0 22px rgba(227,183,123,.06), 0 0 0 44px rgba(227,183,123,.05); }
+.hero-price-block { display: flex; min-width: 215px; flex-direction: column; align-items: flex-start; border-left: 2px solid #d94a3d; padding-left: 1.3rem; }
+.hero-price-block strong { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(4rem, 9vw, 7.5rem); line-height: .82; letter-spacing: -.05em; }
+.hero-price-block span:last-child { margin-top: .65rem; color: rgba(249,240,221,.58); font-size: .7rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+.category-tab { border-bottom: 2px solid transparent; padding: .35rem .2rem; position: relative; color: rgba(217,224,231,.62); font-size: .75rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; transition: color .18s ease, border-color .18s ease; }
+.category-tab + .category-tab { margin-left: 1rem; }
+.category-tab:hover, .category-tab.active { color: #f9f0dd; border-bottom-color: #d94a3d; }
+.tv-toggle { display: inline-flex; align-items: center; gap: .45rem; border: 1px solid rgba(249,240,221,.2); border-radius: .3rem; padding: .55rem .75rem; color: #f9f0dd; font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; transition: background .18s ease, transform .16s ease; }
+.tv-toggle:hover { background: rgba(249,240,221,.08); }
+.tv-toggle:active, .page-button:active { transform: scale(.97); }
+.price-card { position: relative; overflow: hidden; min-height: 176px; border: 1px solid rgba(249,240,221,.11); background: linear-gradient(145deg, rgba(35,59,94,.96), rgba(21,39,65,.96)); padding: 1.2rem; box-shadow: 0 8px 22px rgba(0,0,0,.1); animation: rise-in .36s cubic-bezier(.23,1,.32,1) both; transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
+.price-card::before { content: ''; position: absolute; top: 0; left: 0; width: 32px; height: 5px; background: #e3b77b; } .price-card::after { content: ''; position: absolute; right: 0; bottom: 0; width: 38%; border-top: 1px dotted rgba(227,183,123,.42); }
+.price-card:hover { transform: translateY(-3px); border-color: rgba(227,183,123,.48); box-shadow: 0 14px 30px rgba(0,0,0,.2); }
+.price-card.highlight { border-color: rgba(217,74,61,.72); background: linear-gradient(145deg, rgba(86,44,51,.98), rgba(33,42,65,.96)); transform: rotate(-.25deg); } .price-card.highlight .eyebrow { color: #f07d6e; }
+.price-card.highlight::before { width: 100%; background: #d94a3d; }
+.display-price { color: #fff8ec; font-size: clamp(2.5rem, 4.5vw, 3.85rem); line-height: .76; white-space: nowrap; text-shadow: 2px 2px 0 rgba(16,27,45,.32); }
+.page-button { display: inline-grid; border-style: dotted; width: 26px; height: 26px; place-items: center; border: 1px solid rgba(249,240,221,.2); border-radius: .25rem; transition: background .18s ease, transform .16s ease; }
+.page-button svg { width: 15px; }
+.page-button:hover:not(:disabled) { background: rgba(249,240,221,.1); }
+.page-button:disabled { opacity: .35; cursor: not-allowed; }
+.edit-row { display: flex; align-items: center; gap: .55rem; border-bottom: 1px dotted rgba(22,43,73,.18); padding-bottom: .7rem; }
+.delete-button { display: grid; width: 38px; height: 38px; flex: 0 0 auto; place-items: center; border-radius: .35rem; color: #b83a30; transition: background .18s ease, transform .16s ease; }
+.delete-button:hover { background: rgba(217,74,61,.1); }
+.delete-button:active { transform: scale(.96); }
+@keyframes rise-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@media (min-width: 1600px) { .tv-mode .price-card { min-height: 210px; padding: 1.6rem; } .tv-mode .price-card h3 { font-size: 2.35rem; } .tv-mode .display-price { font-size: 4.6rem; } .tv-mode main { max-width: 1800px; } }
+@media (max-width: 640px) { .hero-price-block { min-width: 0; border-top: 1px solid #d94a3d; border-left: 0; padding-top: 1rem; padding-left: 0; } .hero-price-block strong { font-size: 4.8rem; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; } }
