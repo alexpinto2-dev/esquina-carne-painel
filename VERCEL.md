@@ -23,3 +23,7 @@ O script de analytics opcional foi removido do `client/index.html`, portanto as 
 ## Scripts de instalação do pnpm
 
 O arquivo `pnpm-workspace.yaml` autoriza somente `esbuild` e `@tailwindcss/oxide` em `onlyBuiltDependencies`. Isso evita o aviso de scripts bloqueados sem liberar scripts arbitrários. O lockfile foi regenerado com a configuração atual; o deploy deve usar `pnpm install --frozen-lockfile` e depois `pnpm build`.
+
+## Entrada explícita da Vercel
+
+O domínio `painel-esquina.vercel.app` estava exibindo o código-fonte compilado do servidor porque a detecção automática escolheu `server/_core/index.ts` como entrada. Para eliminar essa ambiguidade, o projeto agora possui `api/index.ts`, que exporta a aplicação Express, e `vercel.json`, que encaminha as rotas públicas e `/api/*` para essa função. Não configure `dist` como Output Directory manualmente; deixe o build gerar `public` e use a função `api/index.ts` como runtime.

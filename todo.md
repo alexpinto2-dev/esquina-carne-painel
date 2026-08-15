@@ -49,3 +49,10 @@
 - [x] Reinstalar dependências e validar o build limpo.
 - [x] Atualizar a documentação de deploy externo.
 - [x] Salvar novo checkpoint.
+
+# Erro em produção na Vercel
+
+- [x] Acessar painel-esquina.vercel.app e identificar a mensagem de erro.
+- [x] Comparar o erro publicado com a configuração e os artefatos do projeto.
+- [x] Corrigir a causa ou documentar o ajuste necessário na Vercel.
+- [x] Validar a publicação e salvar novo checkpoint, se houver alteração de código.
