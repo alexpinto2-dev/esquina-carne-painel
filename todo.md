@@ -28,3 +28,10 @@
 - [x] Garantir que o produto incluído seja persistido no banco ao salvar.
 - [x] Validar que a TV receba o novo produto pela sincronização automática.
 - [x] Salvar novo checkpoint da correção.
+
+# Diagnóstico de deploy externo
+
+- [x] Inspecionar scripts de build, entrada do servidor e configuração específica da Vercel.
+- [x] Corrigir a configuração de execução externa, se necessária.
+- [x] Validar build e comportamento de produção após a correção.
+- [x] Documentar a diferença entre Vercel e hospedagem integrada do Manus.
