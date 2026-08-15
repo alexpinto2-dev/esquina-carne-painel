@@ -35,3 +35,10 @@
 - [x] Corrigir a configuração de execução externa, se necessária.
 - [x] Validar build e comportamento de produção após a correção.
 - [x] Documentar a diferença entre Vercel e hospedagem integrada do Manus.
+
+# Relógio digital no cabeçalho
+
+- [x] Adicionar relógio digital em tempo real no cabeçalho.
+- [x] Ajustar o layout para leitura em TV e mobile.
+- [x] Validar atualização do horário, testes e build.
+- [x] Salvar novo checkpoint.

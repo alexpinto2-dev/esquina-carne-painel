@@ -19,7 +19,8 @@
 .logo-lockup img { width: 84px; height: 84px; border-radius: 50%; object-fit: cover; background: #efefe8; }
 .logo-lockup span { display: block; color: #fff8ec; font-family: 'Barlow Condensed', sans-serif; font-size: clamp(1.7rem, 3vw, 2.7rem); font-weight: 800; line-height: .86; letter-spacing: -.03em; }
 .logo-lockup small { display: block; margin-top: .35rem; color: #d9e0e7; font-size: .62rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
-.header-actions { display: flex; align-items: center; gap: .75rem; }
+.header-actions { display: flex; align-items: center; gap: .9rem; }
+.digital-clock { display: inline-flex; align-items: center; min-width: 8.8rem; color: #fff8ec; font-family: 'Barlow Condensed', monospace; font-size: clamp(1.55rem, 2.7vw, 2.35rem); font-weight: 700; letter-spacing: .06em; line-height: 1; font-variant-numeric: tabular-nums; text-shadow: 0 0 18px rgba(227,183,123,.18); }
 .whatsapp-button { display: inline-flex; align-items: center; gap: .45rem; border-radius: .25rem; background: #218c5a; padding: .65rem .85rem; color: #fff; font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-decoration: none; text-transform: uppercase; transition: background .18s ease, transform .16s ease; }
 .whatsapp-button:hover { background: #2ca86c; }
 .whatsapp-button:active, .maintenance-icon:active, .pager button:active { transform: scale(.96); }
@@ -46,7 +47,7 @@
 .edit-row { display: flex; align-items: center; gap: .55rem; border-bottom: 1px dotted rgba(23,25,28,.18); padding-bottom: .7rem; }
 .delete-button { display: grid; width: 38px; height: 38px; flex: 0 0 auto; place-items: center; border-radius: .35rem; color: #b33f36; transition: background .18s ease, transform .16s ease; }
 .delete-button:hover { background: rgba(179,63,54,.1); }
-@media (max-width: 900px) { .price-grid { gap: 0 1.25rem; } .qr-wrap span { display: none; } }
+@media (max-width: 900px) { .price-grid { gap: 0 1.25rem; } .qr-wrap span { display: none; } .digital-clock { min-width: auto; font-size: 1.55rem; } }
 @media (max-width: 640px) { .header-inner { align-items: flex-start; } .logo-lockup img { width: 50px; height: 50px; } .logo-lockup span { font-size: 1.55rem; } .logo-lockup small { font-size: .5rem; } .header-actions { gap: .4rem; } .whatsapp-button { width: 40px; height: 40px; justify-content: center; padding: 0; } .whatsapp-button span { display: none; } .qr-wrap { display: none; } .price-grid { grid-template-columns: 1fr; } .simple-price-row { min-height: 45px; } .simple-price-row h2 { font-size: 1rem; } .simple-price-row strong { font-size: 1.5rem; } .board-footer { align-items: flex-start; flex-direction: column; gap: .75rem; } }
 @media (min-width: 1500px) { .simple-price-row { min-height: 52px; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; } }
