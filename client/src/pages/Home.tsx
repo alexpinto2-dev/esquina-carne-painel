@@ -29,19 +29,19 @@ export default function Home() {
   const pricesQuery = trpc.prices.list.useQuery(undefined, { refetchInterval: 5000, refetchOnWindowFocus: true });
   const replacePrices = trpc.prices.replaceAll.useMutation();
   const [products, setProducts] = useState<Product[]>(initialProducts);
-  const seededRef = useRef(false);
-
-  useEffect(() => {
-    if (pricesQuery.data && pricesQuery.data.length > 0) {
-      setProducts(pricesQuery.data.map((item) => ({ id: item.id, name: item.name, price: fromPriceCents(item.priceCents), unit: item.unit })));
-    } else if (pricesQuery.data && pricesQuery.data.length === 0 && !seededRef.current) {
-      seededRef.current = true;
-      replacePrices.mutate({ items: initialProducts.map((item, position) => ({ name: item.name, priceCents: toPriceCents(item.price), unit: item.unit, position })) });
-    }
-  }, [pricesQuery.data]);
   const [search, setSearch] = useState("");
   const [maintenanceOpen, setMaintenanceOpen] = useState(false);
   const [page, setPage] = useState(0);
+  const seededRef = useRef(false);
+
+  useEffect(() => {
+    if (!maintenanceOpen && pricesQuery.data && pricesQuery.data.length > 0) {
+      setProducts(pricesQuery.data.map((item) => ({ id: item.id, name: item.name, price: fromPriceCents(item.priceCents), unit: item.unit })));
+    } else if (!maintenanceOpen && pricesQuery.data && pricesQuery.data.length === 0 && !seededRef.current) {
+      seededRef.current = true;
+      replacePrices.mutate({ items: initialProducts.map((item, position) => ({ name: item.name, priceCents: toPriceCents(item.price), unit: item.unit, position })) });
+    }
+  }, [pricesQuery.data, maintenanceOpen]);
   const pageSize = 20;
   const filtered = useMemo(() => products.filter((item) => item.name.toLowerCase().includes(search.toLowerCase())), [products, search]);
   const pageCount = Math.max(1, Math.ceil(filtered.length / pageSize));
@@ -51,7 +51,10 @@ export default function Home() {
   useEffect(() => { if (page >= pageCount) setPage(0); }, [page, pageCount]);
 
   const updateProduct = (id: number, patch: Partial<Product>) => setProducts((list) => list.map((item) => item.id === id ? { ...item, ...patch } : item));
-  const addProduct = () => setProducts((list) => [...list, { id: Date.now(), name: "Novo produto", price: 0, unit: "kg" }]);
+  const addProduct = () => {
+    setSearch("");
+    setProducts((list) => [{ id: Date.now(), name: "Novo produto", price: 0, unit: "kg" }, ...list]);
+  };
   const removeProduct = (id: number) => setProducts((list) => list.filter((item) => item.id !== id));
   const savePrices = async () => {
     await replacePrices.mutateAsync({ items: products.map((item, position) => ({ name: item.name, priceCents: toPriceCents(item.price), unit: item.unit, position })) });

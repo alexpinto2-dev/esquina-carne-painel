@@ -21,3 +21,10 @@
 - [x] Atualizar automaticamente a tela pública quando houver alteração nos preços.
 - [x] Validar edição, inclusão e sincronização.
 - [x] Salvar novo checkpoint.
+
+# Correção de bug
+
+- [x] Corrigir o botão “Novo” para incluir um produto editável na manutenção.
+- [x] Garantir que o produto incluído seja persistido no banco ao salvar.
+- [x] Validar que a TV receba o novo produto pela sincronização automática.
+- [x] Salvar novo checkpoint da correção.
