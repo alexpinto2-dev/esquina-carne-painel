@@ -42,3 +42,10 @@
 - [x] Ajustar o layout para leitura em TV e mobile.
 - [x] Validar atualização do horário, testes e build.
 - [x] Salvar novo checkpoint.
+
+# Bloqueio de scripts no deploy
+
+- [x] Permitir os scripts de instalação do esbuild e Tailwind no pnpm.
+- [x] Reinstalar dependências e validar o build limpo.
+- [x] Atualizar a documentação de deploy externo.
+- [x] Salvar novo checkpoint.

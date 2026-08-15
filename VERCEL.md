@@ -19,3 +19,7 @@ A hospedagem integrada do Manus já injeta as variáveis do projeto, executa o s
 ## Avisos de analytics
 
 O script de analytics opcional foi removido do `client/index.html`, portanto as variáveis `%VITE_ANALYTICS_ENDPOINT%` e `%VITE_ANALYTICS_WEBSITE_ID%` não são necessárias para o build.
+
+## Scripts de instalação do pnpm
+
+O arquivo `pnpm-workspace.yaml` autoriza somente `esbuild` e `@tailwindcss/oxide` em `onlyBuiltDependencies`. Isso evita o aviso de scripts bloqueados sem liberar scripts arbitrários. O lockfile foi regenerado com a configuração atual; o deploy deve usar `pnpm install --frozen-lockfile` e depois `pnpm build`.
